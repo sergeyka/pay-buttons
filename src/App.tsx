@@ -20,6 +20,7 @@ function App() {
   const [googlePayHeight, setGooglePayHeight] = useState<number>(40);
   const [applePayHeight, setApplePayHeight] = useState<number>(40);
   const [sessionKey, setSessionKey] = useState('');
+  const [initiatedBy, setInitiatedBy] = useState<'google' | 'apple' | 'unset'>('unset');
 
   useEffect(() => {
     const fetchSessionKey = async () => {
@@ -78,11 +79,15 @@ function App() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h1>Coinflow Purchase Demo</h1>
+      <h1>initiatedBy: {initiatedBy}</h1>
       <div style={{ maxWidth: '400px', margin: '20px auto' }}>
         <div
           style={{ position: 'relative', height: `${googlePayHeight}px`, flex: 1, margin: '16px 0' }}
-          className="w-full"
+          className="w-full" 
+          onClick={() => {
+            setInitiatedBy('google');
+            console.log('google pay initiated');
+          }}
         >
 
           <CoinflowGooglePayButton
@@ -99,7 +104,11 @@ function App() {
           />
         </div>
 
-        <div style={{ height: `${applePayHeight}px`, flex: 1, position: 'relative' }} className="w-full">
+        <div style={{ height: `${applePayHeight}px`, flex: 1, position: 'relative' }} className="w-full" 
+        onClick={() => {
+          setInitiatedBy('apple');
+          console.log('apple pay initiated');
+        }}>
             <CoinflowApplePayButton
               env={'sandbox'}
               sessionKey={sessionKey}
